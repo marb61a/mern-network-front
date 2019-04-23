@@ -15,8 +15,34 @@ class Posts extends Component {
 
   loadPosts = page => {
     list(page)
-      .then()
+      .then(data => {
+        if(data.error) {
+          console.log(data.error);
+        } else {
+          this.setState({
+            posts: data
+          });
+        }
+      });
   };
+
+  componentDidMount() {
+    this.loadPosts(this.state.page);
+}
+
+loadMore = number => {
+    this.setState({ 
+      page: this.state.page + number 
+    });
+    this.loadPosts(this.state.page + number);
+};
+
+loadLess = number => {
+    this.setState({ 
+      page: this.state.page - number 
+    });
+    this.loadPosts(this.state.page - number);
+};
 
   render() {
     const { posts, page } = this.state;

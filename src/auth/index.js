@@ -27,3 +27,29 @@ export const signin = user => {
     })
     .catch(err => console.log(err));
 };
+
+export const authenticate = (jwt, next) => {
+  if(typeof window !== "undefined") {
+    localStorage.setItem("jwt", JSON.stringify(jwt));
+    next();
+  }
+};
+
+export const setName = (name, next) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("username", JSON.stringify(name));
+    next();
+  }
+};
+
+export const isAuthenticated = () => {
+  if(typeof window == "undefined") {
+    return false;
+  };
+
+  if (localStorage.getItem("jwt")) {
+    return JSON.parse(localStorage.getItem("jwt"));
+  } else {
+    return false;
+  }
+};

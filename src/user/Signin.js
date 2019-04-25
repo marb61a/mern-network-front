@@ -13,11 +13,46 @@ class Signin extends Component {
     };
   }
 
+  handleChange = name => event => {
+    this.setState({ 
+      error: "" 
+    });
+    this.setState({ 
+      [name]: event.target.value 
+    });
+  };
+
+  clickSubmit = event => {
+    event.preventDefault();
+  };
+
   signinForm = (email, password) => (
     <form>
       <div className="form-group">
-      
+        <label className="text-muted">Email</label>
+        <input 
+          onChange={this.handleChange("email")}
+          type="email"
+          className="form-control"
+          value={email}
+        />
       </div>
+      <div className="form-group">
+        <label className="text-muted">Email</label>
+        <input 
+          onChange={this.handleChange("password")}
+          type="password"
+          className="form-control"
+          value={password}
+        />
+      </div>
+
+      <button
+        onClick={this.clickSubmit}
+        className="btn btn-raised btn-primary"
+      >
+        Submit
+      </button>
     </form>
   );
 

@@ -10,7 +10,9 @@ class Signup extends Component {
       name: "",
       email: "",
       password: "",
-    }
+      error: "",
+      
+    };
   }
 
   handleChange = name => event => {

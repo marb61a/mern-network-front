@@ -44,19 +44,42 @@ class Comment extends Component {
     }
 
     if (this.isValid()) {
-      
+
     }
   };
 
   render() {
+    const { comments } = this.props;
     const { error } = this.state;
 
     return(
       <div>
         <h2 className="mt-5 mb-5">Leave a comment</h2>
-        <form>
-        
+        <form onSubmit={this.addComment}>
+          <div className="form-group">
+            <input 
+              type="text"
+              onChange={this.handleChange}
+              value={this.state.text}
+              className="form-control"
+              placeholder="Leave a comment..."
+            />
+            <button className="btn btn-raised btn-success mt-2">
+              Post
+            </button>
+          </div>
         </form>
+        <div
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
+        >
+          {error}
+        </div>
+        <div className="col-md-12">
+          <h3>{}</h3>
+          <hr />
+          
+        </div>
       </div>
     );
   }

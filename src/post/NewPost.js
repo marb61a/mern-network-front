@@ -45,9 +45,39 @@ class NewPost extends Component {
     return true;
   };
 
+  handleChange = name => event => {
+    this.setState({
+      error: ""
+    });
+    const value = name === "photo" ? event.target.files[0] : event.target.value;
+    const fileSize = name === "photo" ? event.target.files[0].size : 0;
+    this.postData.set(name, value);
+    this.setState({ 
+      [name]: value, 
+      fileSize 
+    });
+  };
+
   newPostForm = (title, body) => (
     <form>
-    
+      <div className="form-group">
+        <label className="text-muted">Post Photo</label>
+        <input 
+        
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Title</label>
+        <input 
+        
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Body</label>
+        <input 
+        
+        />
+      </div>
     </form>
   );
 

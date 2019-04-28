@@ -68,3 +68,4 @@ export const update = (postId, token, post) => {
     })
     .catch(err => console.log(err));
 };
+

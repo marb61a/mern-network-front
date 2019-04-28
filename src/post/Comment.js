@@ -20,6 +20,34 @@ class Comment extends Component {
     });
   };
 
+  isValid = () => {
+    const { text } = this.state;
+    if (!text.length > 0 || text.length > 150) {
+      this.setState({
+        error: "Comment should not be empty and less than 150 characters long"
+      });
+
+      return false;
+    }
+
+    return true;
+  };
+
+  addComment = e => {
+    e.preventDefault();
+    if(!isAuthenticated()) {
+      this.setState({ 
+        error: "Please signin to leave a comment" 
+      });
+
+      return false;
+    }
+
+    if (this.isValid()) {
+      
+    }
+  };
+
   render() {
     const { error } = this.state;
 

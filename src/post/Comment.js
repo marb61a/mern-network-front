@@ -68,7 +68,15 @@ class Comment extends Component {
     const userId = isAuthenticated().user._id;
     const token = isAuthenticated().token;
     const postId = this.props.postId;
-    
+
+    uncomment(userId, token, postId, comment)
+      .then(data => {
+        if(data.error) {
+          console.log(data.error);
+        } else {
+          this.props.updateComments(data.comments);
+        }
+      })
   };
 
   render() {
@@ -99,9 +107,26 @@ class Comment extends Component {
           {error}
         </div>
         <div className="col-md-12">
-          <h3>{}</h3>
+          <h3 className="text-primary">{comments.length} Comments</h3>
           <hr />
-          
+          {
+            comments.map((comment, i) => (
+              <div>
+                <Link>
+                  <img 
+                    style={{
+                      borderRadius: "50%",
+                      border: "1px solid black"
+                    }}
+                    className="float-left mr-2"
+                    height="30px"
+                    width="30px"
+                    alt={comment.postedBy.name}
+                  />
+                </Link>
+              </div>
+            ))
+          }
         </div>
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { isAuthenticated } from "../auth";
 import { create } from "./apiPost";
 import { Redirect } from "react-router-dom";
@@ -9,9 +10,12 @@ class NewPost extends Component {
     this.state = {
       title: "",
       body: "",
+      photo: "",
       error: "",
-      user: "",
-      loading: false
+      user: {},
+      fileSize: 0,
+      loading: false,
+      redirectToProfile: false
     };
   }
 
@@ -56,6 +60,34 @@ class NewPost extends Component {
       [name]: value, 
       fileSize 
     });
+  };
+
+  clickSubmit = event => {
+    event.preventDefault();
+    this.setState({
+      loading: true
+    });
+
+    if(this.isValid()) {
+      const userId = isAuthenticated().user._id;
+      const token = isAuthenticated().token;
+
+      create(userId, token, this.postData)
+        .then(data => {
+          if(data.error) {
+            this.setState({
+              error: data.error
+            });
+          } else {
+            this.setState({
+              loading: false,
+              title: "",
+              body: "",
+              redirectToProfile: true
+            });
+          }
+        });
+    }
   };
 
   newPostForm = (title, body) => (

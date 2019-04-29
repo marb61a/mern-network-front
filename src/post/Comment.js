@@ -44,8 +44,31 @@ class Comment extends Component {
     }
 
     if (this.isValid()) {
+      const userId = isAuthenticated().user._id;
+      const token = isAuthenticated.token;
+      const postId = this.props.postId;
 
-    }
+      comment(userId, token, postId, { text: this.state.text })
+        .then(data => {
+          if(data.error) {
+            console.log(data.error);
+          } else {
+            this.setState({
+              text: ""
+            });
+
+            // Dispatches a fresh list of comments to parent
+            this.props.updateComments(data.comments);
+          }
+        });
+    };
+  };
+
+  deleteComment = comment => {
+    const userId = isAuthenticated().user._id;
+    const token = isAuthenticated().token;
+    const postId = this.props.postId;
+    
   };
 
   render() {

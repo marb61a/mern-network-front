@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import { singlePost } from "./apiPost";
+import { singlePost, remove, like, unlike } from "./apiPost";
 import DefaultPost from "../images/mountains.jpg";
 import { isAuthenticated } from "../auth";
 
@@ -57,6 +57,32 @@ class SinglePost extends Component {
       });
   }
 
+  deletePost = () => {
+    const postId = this.props.match.params.postId;
+    const token = isAuthenticated().token;
+
+    remove(postId, token)
+      .then(data => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          this.setState({ 
+            redirectToHome: true 
+          });
+        }
+      });
+  };
+
+  deleteConfirmed = () => {
+    let answer = window.confirm(
+      "Are you sure you want to delete your post?"
+    );
+
+    if (answer) {
+      this.deletePost();
+    }
+  };
+
   renderPost = post => {
     return(
       <div className="card-body">
@@ -92,3 +118,5 @@ class SinglePost extends Component {
     )
   }
 }
+
+export default SinglePost;

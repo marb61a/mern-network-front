@@ -8,6 +8,10 @@ import { isAuthenticated } from "../auth";
 class SinglePost extends Component {
   state = {
     post: "",
+    redirectToHome: false,
+    redirectToSignin: false,
+    like: false,
+    likes: 0,
     comment: []
   };
 
@@ -25,6 +29,33 @@ class SinglePost extends Component {
         }
       })
   };
+
+  likeToggle = () => {
+    if(!isAuthenticated()) {
+      this.setState({
+        redirectToSignin: true
+      });
+
+      return false;
+    }
+
+    let callApi = this.state.like ? unlike : like;
+    const userId = isAuthenticated().user._id;
+    const postId = this.state.post._id;
+    const token = isAuthenticated().token;
+
+    callApi(userId, token, postId)
+      .then(data => {
+        if(data.error) {
+          console.log(data.error);
+        } else {
+          this.setState({
+            like: !this.state.like,
+            likes: data.likes.length
+          });
+        }
+      });
+  }
 
   renderPost = post => {
     return(

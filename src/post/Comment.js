@@ -111,19 +111,37 @@ class Comment extends Component {
           <hr />
           {
             comments.map((comment, i) => (
-              <div>
-                <Link>
-                  <img 
-                    style={{
-                      borderRadius: "50%",
-                      border: "1px solid black"
-                    }}
-                    className="float-left mr-2"
-                    height="30px"
-                    width="30px"
-                    alt={comment.postedBy.name}
-                  />
-                </Link>
+              <div key={i}>
+                <div>
+                  <Link>
+                    <img 
+                      style={{
+                        borderRadius: "50%",
+                        border: "1px solid black"
+                      }}
+                      className="float-left mr-2"
+                      height="30px"
+                      width="30px"
+                      alt={comment.postedBy.name}
+                    />
+                  </Link>
+                  <div>
+                    <p className="lead">{comment.text}</p>
+                    <p className="font-italic mark">
+                      Posted by{" "}
+                      <Link
+                        to={`/user/${comment.postedBy._id}`}
+                      >
+                        {comment.postedBy.name}{" "}
+                      </Link>
+                      on{" "}
+                      {
+                        new Date(comment.created)
+                          .toDateString()
+                      }
+                    </p>
+                  </div>
+                </div>
               </div>
             ))
           }

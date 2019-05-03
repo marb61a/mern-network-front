@@ -58,11 +58,18 @@ class Posts extends Component {
 
             return(
               <div className="card col-md-4" key={i}>
-                <div className="row">
+                <div className="card-body">
                   <img 
-                    src={}
+                    src={``}
                     alt={post.title}
+                    className="img-thunbnail mb-3"
+                    style={{ height: "200px", width: "100%" }}
                   />
+                  <h5 className="card-title">{post.title}</h5>
+                  <p className="card-text">
+                    {post.body.substring(0, 100)}
+                  </p>
+                  <br />
                 </div>
               </div>
             )
@@ -77,7 +84,25 @@ class Posts extends Component {
     
     return(
       <div className="container">
-      
+        <h2 className="mt-5 mb-5">
+          {!posts.length ? "No more posts!" : "Recent Posts"}
+        </h2>
+        {this.renderPosts(posts)}
+        {
+          page > 1 ?
+          (
+            <button
+              className="btn btn-raised btn-warning mr-5 mt-5 mb-5"
+              onClick={() => this.loadLess(1)}
+            >
+              Previous ({this.state.page - 1})
+            </button>
+          ) :
+          ("")
+        }
+        {
+
+        }
       </div>
     );
   }

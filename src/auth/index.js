@@ -42,6 +42,19 @@ export const setName = (name, next) => {
   }
 };
 
+export const signout = next => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("jwt");
+  }
+  next();
+
+  return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
+
+  })
+    .then()
+    .catch(err => console.log(err))
+};
+
 export const isAuthenticated = () => {
   if(typeof window == "undefined") {
     return false;
@@ -52,4 +65,22 @@ export const isAuthenticated = () => {
   } else {
     return false;
   }
+};
+
+export const forgotPassword = email => {
+  console.log("Email: ", email);
+
+  return fetch(`${process.env.REACT_APP_API_URL}/forgot-password/`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email })
+  })
+  .then(response => {
+    console.log("Forgotten password response:", response);
+    return response.json();
+  })
+  .catch(err => console.log(err));
 };

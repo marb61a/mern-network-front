@@ -13,13 +13,39 @@ class Users extends Component {
   }
 
   componentDidMount() {
-    
+    list()
+      .then(data => {
+        if(data.error) {
+          console.log(data.error);
+        } else {
+          this.setState({
+            users: data
+          });
+        }
+      });
   }
 
   renderUsers = users => (
     <div className="row">
       {
-        
+        users.map((user, i) => (
+          <div className="card col-md-4" key={i}>
+            <img 
+              style={{ height: "200px", width: "auto" }}
+              className="img-thumbnail"
+              alt={user.name}
+            />
+            <div className="card-body">
+              <h5 className="card-title">{user.name}</h5>
+              <p className="card-text">{user.email}</p>
+              <Link
+              
+              >
+                View Profile
+              </Link>
+            </div>
+          </div>
+        ))    
       }
     </div>
   );
@@ -29,7 +55,9 @@ class Users extends Component {
 
     return(
       <div className="container">
-      
+        <h2 className="mt-5 mb-5">Users</h2>
+
+        {this.renderUsers(users)}
       </div>
     );
   }

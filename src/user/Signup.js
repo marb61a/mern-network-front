@@ -94,7 +94,7 @@ class Signup extends Component {
     }
   };
 
-  signupForm = (name, email, password) => (
+  signupForm = (name, email, password, recaptcha) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Name</label>
@@ -123,6 +123,16 @@ class Signup extends Component {
           value={password}
         />
       </div>
+      <div className="form-group">
+        <label className="text-muted">
+          {recaptcha ? 'Excellent!!' : 'What day is it today?'}
+        </label>
+        <input 
+          onChange={this.recaptchaHandler}
+          type="text"
+          className="form-control"
+        />
+      </div>
       <button
         onClick={this.clickSubmit}
         className="btn btn-raised btn-primary"
@@ -133,18 +143,29 @@ class Signup extends Component {
   );
 
   render() {
-    const { email, name, password, error } = this.state;
+    const { email, name, password, error, open, recaptcha } = this.state;
 
     return(
       <div className="container">
         <h2 className="mt-5 mb-5">Signup</h2>
         <hr />
+        <SocialLogin />
+        <hr />
+        <br />
         <div
           className="alert alert-danger"
           style={{display: error ? "" : "none" }}
         >
           {error}
         </div>
+        <div
+          className="alert alert-info"
+          style={{ display: open ? "" : "none" }}
+        >
+          A new account has been successfully created. Please{" "}
+          <Link to="/signin">Sign In</Link>.
+        </div>
+        {this.signupForm(name, email, password, recaptcha)}
       </div>
     );
   }

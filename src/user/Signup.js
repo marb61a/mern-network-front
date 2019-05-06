@@ -54,6 +54,14 @@ class Signup extends Component {
       this.setState({
         recaptcha: true
       });
+
+      return true;
+    } else {
+      this.setState({
+        recaptcha: false
+      });
+
+      return false;
     }
   }
 
@@ -62,7 +70,29 @@ class Signup extends Component {
     const {name, email, password} = this.state;
     const user = {name, email, password};
     
-  }
+    if(this.state.recaptcha) {
+      signup(user)
+        .then(data => {
+          if(data.error) {
+            this.setState({
+              error: data.error
+            });
+          } else {
+            this.setState({
+              error: "",
+              name: "",
+              email: "",
+              password: "",
+              open: true
+            });
+          }
+        })
+    } else {
+      this.setState({
+        error: 'What day is today, please ensure the correct answer'
+      });
+    }
+  };
 
   signupForm = (name, email, password) => (
     <form>

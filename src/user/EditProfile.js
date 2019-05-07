@@ -41,6 +41,35 @@ class EditProfile extends Component {
       })
   };
 
+  componentDidMount() {
+    this.userData = new FormData();
+    const userId = this.props.match.params.userId;
+    this.init(userId);
+  }
+
+  isValid = () => {
+    const { name, email, password, fileSize } = this.state;
+
+    if(fileSize > 1000000) {
+      this.setState({
+        error: "File size should be less than 100kb",
+        loading: false
+      });
+
+      return false;
+    }
+
+    if(name.length === 0) {
+      this.setState({
+        error: "Name is required", 
+        loading: false
+      });
+
+      return false;
+    }
+    
+  };
+
   signupForm = (name, email, password, about) => (
     <form>
       <div className="form-group">

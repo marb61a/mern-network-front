@@ -67,7 +67,38 @@ class EditProfile extends Component {
 
       return false;
     }
+
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      this.setState({
+        error: "A valid Email is required",
+        loading: false
+      });
+
+      return false;
+    }
+
+    if (password.length >= 1 && password.length <= 5) {
+      this.setState({
+        error: "Password must be at least 6 characters long",
+        loading: false
+      });
+      
+      return false;
+    }
+
+    return true;
+  };
+
+  handleChange = name => event => {
+    this.setState({
+      error: ""
+    });
+
+    const value = name === "photo" ? event.target.files[0] : event.target.value;
+    const fileSize = name === "photo" ? event.target.files[0].size : 0;
     
+    this.userData.set(name, value);
+    this.setState({ [name]: value, fileSize });
   };
 
   signupForm = (name, email, password, about) => (

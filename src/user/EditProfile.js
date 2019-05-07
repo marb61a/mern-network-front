@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { isAuthenticated } from "../auth";
+import { Redirect } from "react-router-dom";
+import DefaultProfile from "../images/avatar.jpg";
 
+import { isAuthenticated } from "../auth";
+import { read, update, updateUser } from "./apiUser";
 class EditProfile extends Component {
   constructor() {
     super();
@@ -9,8 +12,34 @@ class EditProfile extends Component {
       name: "",
       email: "",
       password: "",
+      redirectToProfile: false,
+      error: "",
+      fileSize: 0,
+      loading: false,
+      about: ""
     }
   }
+
+  init = userId => {
+    const token = isAuthenticated().token;
+
+    read(userId, token)
+      .then(data => {
+        if(data.error) {
+          this.setState({
+            redirectToProfile: true
+          });
+        } else {
+          this.setState({
+            id: data._id,
+            name: data.name,
+            email: data.email,
+            error: "",
+            about: data.about
+          });
+        }
+      })
+  };
 
   signupForm = (name, email, password, about) => (
     <form>

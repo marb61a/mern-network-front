@@ -135,6 +135,33 @@ class EditProfile extends Component {
   signupForm = (name, email, password, about) => (
     <form>
       <div className="form-group">
+        <label className="text-muted">Profile Photo</label>
+        <input
+          onChange={this.handleChange("photo")}
+          type="file"
+          accept="image/*"
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Name</label>
+        <input 
+          onChange={this.handleChange("name")}
+          type="text"
+          className="form-control"
+          value={name}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Email</label>
+        <input 
+          onChange={this.handleChange("email")}
+          type="email"
+          className="form-control"
+          value={email}
+        />
+      </div>
+      <div>
       
       </div>
     </form>

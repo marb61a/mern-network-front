@@ -161,17 +161,58 @@ class EditProfile extends Component {
           value={email}
         />
       </div>
-      <div>
-      
+      <div className="form-group">
+        <label className="text-muted">About</label>
+        <textarea
+          onChange={this.handleChange("about")}
+          type="text"
+          className="form-control"
+          value={about}
+        />
       </div>
+      <div className="form-group">
+        <label className="text-muted">Password</label>
+        <input
+          onChange={this.handleChange("password")}
+          type="password"
+          className="form-control"
+          value={password}
+        />
+      </div>
+      <button
+        onClick={this.clickSubmit}
+        className="btn btn-raised btn-primary"
+      >
+        Update
+      </button>
     </form>
   );
 
   render() {
+    const {
+      id,
+      name,
+      email,
+      password,
+      redirectToProfile,
+      error,
+      loading,
+      about
+    } = this.state;
+
+    if(redirectToProfile) {
+      return <Redirect to={`/user/${id}`} />
+    }
+
     return(
       <div className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
-        
+        <div 
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
+        >
+          {error}
+        </div>
       </div>
     );
   }

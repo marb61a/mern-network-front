@@ -204,6 +204,12 @@ class EditProfile extends Component {
       return <Redirect to={`/user/${id}`} />
     }
 
+    const photoUrl = id ?
+    `${
+      process.env.REACT_APP_API_URL
+    }/user/photo/${id}?${new Date().getTime()}` :
+    DefaultProfile
+
     return(
       <div className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
@@ -213,6 +219,32 @@ class EditProfile extends Component {
         >
           {error}
         </div>
+        {
+          loading ? (
+            <div className="jumbotron text-center">
+              <h2>Loading...</h2>
+            </div>
+          ) : (
+            ""
+          ) 
+        }
+        <img
+          style={{ height: "200px", width: "auto" }}
+          className="img-thumbnail"
+          src={photoUrl}
+          onError={i => (i.target.src = `${DefaultProfile}`)}
+          alt={name}
+        />
+
+        {
+          isAuthenticated().user.role === "admin" &&
+            this.signupForm(name, email, password, about)
+        }
+
+        {
+          isAuthenticated().user._id === id &&
+            this.signupForm(name, email, password, about)
+        }
       </div>
     );
   }

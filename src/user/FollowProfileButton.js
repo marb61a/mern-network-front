@@ -17,12 +17,16 @@ class FollowProfileButton extends Component {
         {
           !this.props.following ? (
             <button
-            
+              onClick={this.followClick}
+              className="btn btn-success btn-raised mr-5"
             >
               Follow
             </button>
           ) : (
-            <button>
+            <button
+              onClick={this.unfollowClick}
+              className="btn btn-success btn-raised"
+            >
               Unfollow
             </button>
           )

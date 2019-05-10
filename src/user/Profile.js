@@ -110,14 +110,44 @@ class Profile extends Component {
             <img
               style={{ height: "200px", width: "auto" }}
               className="img-thumbnail"
+              src={photoUrl}
+              onError={i => (i.target.src = `${DefaultProfile}`)}
               alt={user.name}
             />
           </div>
           <div className="col-md-8">
             <div className="lead mt-2">
               <p>Hello {user.name}</p>
-              
+              <p>Email: {user.email}</p>
+              <p>
+                {
+                  `Joined ${new Date(user.created).toDateString()}`
+                }
+              </p>
             </div>
+            {
+              isAuthenticated.user() && 
+              isAuthenticated().user._id === user._id ?  (
+                <div className="inline-block">
+                  <Link
+                    className="btn btn-raised btn-info mr-5"
+                    to={`/post/create`}
+                  >
+                    Create Post
+                  </Link>
+                  <Link
+                    className="btn btn-raised btn-success mr-5"
+                    to={`/user/edit/${user._id}`}
+                  >
+                    Edit Profile
+                  </Link>
+                </div>
+              ) : (
+                <FollowProfileButton 
+                
+                />
+              )
+            }
           </div>
         </div>
       </div>

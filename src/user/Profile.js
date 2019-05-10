@@ -3,19 +3,40 @@ import { Redirect, Link } from "react-router-dom";
 
 import { isAuthenticated } from "../auth";
 import ProfileTabs from "./ProfileTabs";
-import { listByUser } from "../post/apiPost";
 import { read } from "./apiUser";
+import DefaultProfile from "../images/avatar.jpg";
+import DeleteUser from "./DeleteUser";
+import FollowProfileButton from "./FollowProfileButton";
+import { listByUser } from "../post/apiPost";
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      error: "",
+      user: { following: [], followers: [] },
       redirectToSignin: false,
+      following: false,
+      error: "",
       posts: []
-
     };
   }
+
+  checkFollow =  user => {
+    const jwt = isAuthenticated();
+    const match = user.followers.find(follower => {
+      // One id has many other ids (followers) and vice versa
+      return follower._id === jwt.user._id;
+    });
+
+    return match;
+  };
+
+  clickFollowButton = callApi => {
+    const userId = isAuthenticated().user._id;
+    const token = isAuthenticated().token;
+
+    
+  };
 
   init = userId => {
     const token = isAuthenticated().token;

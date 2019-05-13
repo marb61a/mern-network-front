@@ -50,12 +50,46 @@ class Signin extends Component {
     }
 
     if(dayCount === new Date().getDay()) {
-      
+      this.setState({
+        recaptcha: true
+      });
+
+      return true;
+    } else {
+      this.setState({
+        recaptcha: false
+      });
+
+      return false;
     }
   };
 
   clickSubmit = event => {
     event.preventDefault();
+    this.setState({
+      loading: true
+    });
+
+    const { email, password } = this.state;
+    const user = { email, password };
+
+    if(this.state.recaptcha) {
+      signin(user)
+        .then(data => {
+          if(data.error){
+            this.setState({
+              error: data.error, 
+              loading: false
+            }); 
+          } else {
+            authenticate(data, () => {
+              this.setState({
+                redirectToReferer: true
+              });
+            });
+          }
+        })
+    }
   };
 
   signinForm = (email, password) => (

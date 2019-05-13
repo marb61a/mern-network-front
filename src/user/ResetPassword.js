@@ -51,6 +51,40 @@ class ResetPassword extends Component {
             </h4>
           )
         }
+        {
+          this.state.error && (
+            <h4 className="bg-warning">
+              {this.state.warning}
+            </h4>
+          )
+        }
+        <form
+          style={{display: this.state.message.length ? "none" : ""}}
+        >
+          <div>
+            <input 
+              type="password"
+              className="form-control"
+              placeholder="Your new password"
+              value={this.state.newPassword}
+              name="newPassword"
+              onChange={e => 
+                this.setState({
+                  newPassword: e.target.value,
+                  message: "",
+                  error: ""
+                })
+              }
+              autofocus
+            />
+          </div>
+          <button
+            onClick={this.resetPassword}
+            className="btn " 
+          >
+            Reset Password
+          </button>
+        </form>
       </div>
     );
   }

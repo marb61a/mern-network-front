@@ -89,10 +89,15 @@ class Signin extends Component {
             });
           }
         })
+    } else {
+      this.setState({
+        loading: false,
+        error: "What day is today? Please write a correct answer!"
+      });
     }
   };
 
-  signinForm = (email, password) => (
+  signinForm = (email, password, recaptcha) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Email</label>
@@ -104,7 +109,7 @@ class Signin extends Component {
         />
       </div>
       <div className="form-group">
-        <label className="text-muted">Email</label>
+        <label className="text-muted">Password</label>
         <input 
           onChange={this.handleChange("password")}
           type="password"
@@ -112,7 +117,16 @@ class Signin extends Component {
           value={password}
         />
       </div>
-
+      <div className="form-group">
+        <label className="text-muted">
+          {recaptcha ? "Thanks. You got it!" : "What day is today?"}
+        </label>
+        <input 
+          onChange={this.recaptchaHandler}
+          type="text"
+          className="form-control"
+        />
+      </div>
       <button
         onClick={this.clickSubmit}
         className="btn btn-raised btn-primary"
@@ -123,13 +137,25 @@ class Signin extends Component {
   );
 
   render() {
-    const { email, password, error } = this.state;
+    const { 
+      email, 
+      password, 
+      error,
+      redirectToReferer,
+      loading,
+      recaptcha
+    } = this.state;
+
+    if(redirectToReferer) {
+      return <Redirect to="/" />;
+    }
 
     return(
       <div className="container">
         <h2 className="mt-5 mb-5">SignIn</h2>
         <hr />
-
+        <SocialLogin />
+        
       </div>
     );
   }

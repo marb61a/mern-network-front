@@ -21,11 +21,34 @@ class SocialLogin extends React.Component {
       imageUrl: imageUrl
     };
 
+    socialLogin(user)
+      .then(data => {
+        if(data.error) {
+          console.log("Error Login. Please try again..");
+        } else {
+          console.log("signin success - setting jwt: ", data);
+          authenticate(data, () => {
+            this.setState({
+              redirectToReferrer: true
+            });
+          });
+        }
+      });
   };
 
   render() {
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer) {
+      return <Redirect to="/" />;
+    }
+
     return(
-      <div>#</div>
+      <GoogleLogin
+        clientId=""
+        buttonText="Login with Google"
+        onSuccess={this.responseGoogle}
+        onFailure={this.responseGoogle}
+      />
     );
   }
 }

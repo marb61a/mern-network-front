@@ -34,7 +34,7 @@ class Signin extends Component {
     let dayCount;
 
     if(userDay === 'sunday') {
-      dayCount === 0;
+      dayCount = 0;
     } else if (userDay === "monday") {
       dayCount = 1;
     } else if (userDay === "tuesday") {

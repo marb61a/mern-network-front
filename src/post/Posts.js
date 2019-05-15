@@ -101,7 +101,16 @@ class Posts extends Component {
           ("")
         }
         {
-
+          posts.length ? (
+            <button
+              className="btn btn-raised btn-success mt-5 mb-5"
+              onClick={() => this.loadMore(1)}
+            >
+              Next ({page + 1})
+            </button>
+          ) : (
+              ""
+          )
         }
       </div>
     );

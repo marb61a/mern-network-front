@@ -193,14 +193,33 @@ class SinglePost extends Component {
   };
 
   render() {
-    const { post } = this.state;
+    const { 
+      post, redirectToHome, redirectToSignin, comments
+    } = this.state;
+
+    if(redirectToHome) {
+      return <Redirect to={`/`} />;
+    } else if(redirectToSignin) {
+      return <Redirect to={`/signin`} />;
+    }
 
     return(
       <div className="container">
         <h2 className="display-2 mt-5 mb-5">{post.title}</h2>
         {
-
+          !post ? (
+            <div className="jumbotron text-center">
+              <h2>Loading...</h2>
+            </div>
+          ) : (
+            this.renderPost(post)
+          )
         }
+        <Comment 
+          postId={post._id}
+          comments={comments.reverse()}
+          updateComments={this.updateComments}
+        />
       </div>
     )
   }

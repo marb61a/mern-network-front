@@ -119,12 +119,39 @@ class SinglePost extends Component {
             </h3>
           ) : (
             <h3 onClick={this.likeToggle}>
-            
+              <i
+                className="fa fa-thumbs-up text-warning bg-dark"
+                style={{ padding: "10px", borderRadius: "50%" }}
+              />{" "}
+              {likes} Like
             </h3>
           )
         }
         <p className="card-text">{post.body}</p>
         <br />
+        <p className="font-italic mark">
+          Posted by
+          <Link to={`${posterId}`}>{posterName}</Link>
+          on{new Date(post.created).toDateString()}
+        </p>
+        <div className="inline-block">
+          <Link
+            to={`/`}
+            className="btn btn-raised btn-primary btn-sm mr-5"  
+          >
+            Back to posts
+          </Link>
+          {
+            isAuthenticated().user && 
+            isAuthenticated().user._id === post.postedBy._id && (
+              <>
+                <Link>
+                
+                </Link>
+              </>
+            ) 
+          }
+        </div>
       </div>
     );
   };

@@ -15,6 +15,12 @@ class SinglePost extends Component {
     comment: []
   };
 
+  checkLike = likes => {
+    const userId = isAuthenticated() && isAuthenticated().user._id;
+    let match = likes.indexOf(userId) !== -1;
+    return match;
+  };
+
   componentDidMount = () => {
     const postId = this.props.match.params.postId;
 
@@ -28,6 +34,12 @@ class SinglePost extends Component {
           });
         }
       })
+  };
+
+  updateComments = comments => {
+    this.setState({
+      comments
+    });
   };
 
   likeToggle = () => {
@@ -97,7 +109,19 @@ class SinglePost extends Component {
           }}
         />
         {
-
+          like ? (
+            <h3 onClick={this.likeToggle}>
+              <i 
+                className="fa fa-thumbs-up text-success bg-dark"
+                style={{ padding: "10px", borderRadius: "50%" }}
+              />{" "}
+              {likes} Like
+            </h3>
+          ) : (
+            <h3 onClick={this.likeToggle}>
+            
+            </h3>
+          )
         }
         <p className="card-text">{post.body}</p>
         <br />

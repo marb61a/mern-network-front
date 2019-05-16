@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { singlePost, remove, like, unlike } from "./apiPost";
 import DefaultPost from "../images/mountains.jpg";
 import { isAuthenticated } from "../auth";
+import Comment from "./Comment";
 
 class SinglePost extends Component {
   state = {
@@ -96,11 +97,19 @@ class SinglePost extends Component {
   };
 
   renderPost = post => {
+    const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
+    const posterName = post.postedBy ? post.postedBy.name : " Unknown";
+
+    const { like, likes } = this.state;
+
     return(
       <div className="card-body">
         <img 
-          src={``}
+          src={`${process.env.REACT_APP_API_URL}/post/photo/${
+            post._id
+          }`}
           alt={post.title}
+          onError={i => (i.target.src = `${DefaultPost}`)}
           className="img-thunbnail mb-3"
           style={{
             height: "300px",

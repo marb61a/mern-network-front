@@ -61,11 +61,40 @@ class EditPost extends Component {
     this.setState({
       loading: true
     });
-    
-  }
+
+    if(this.isValid()) {
+      const postId = this.props.match.params.postId;
+      const token = isAuthenticated().token;
+
+      update(postId, token, this.postData)
+        .then(data => {
+          if(data.error) {
+            this.setState({
+              error: data.error
+            });
+          } else {
+            this.setState({
+              loading: false,
+              title: "",
+              body: "",
+              redirectToProfile: true
+            });
+          }
+        })
+    }
+  };
 
   editPostForm = (title, body) => (
     <form>
+      <div className="form-group">
+        <label className="text-muted">Post Photo</label>
+        <input
+          onChange={this.handleChange("photo")}
+          type="file"
+          accept="image/*"
+          className="form-control"
+        />
+      </div>
       <div className="form-group">
         <label className="text-muted">Title</label>
         <input 
@@ -74,6 +103,9 @@ class EditPost extends Component {
           className="form-control"
           value={title}
         />
+      </div>
+      <div className="form-group">
+      
       </div>
     </form>
   );

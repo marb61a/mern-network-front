@@ -105,8 +105,20 @@ class EditPost extends Component {
         />
       </div>
       <div className="form-group">
-      
+        <label className="text-muted">Body</label>
+        <textarea
+          onChange={this.handleChange("body")}
+          type="text"
+          className="form-control"
+          value={body}
+        />
       </div>
+      <button
+        onClick={this.clickSubmit}
+        className="btn btn-raised btn-primary"
+      >
+        Update Post
+      </button>
     </form>
   );
 
@@ -115,8 +127,16 @@ class EditPost extends Component {
       id, 
       title,
       body,
-      error
+      redirectToProfile,
+      error,
+      loading
     } = this.state;
+
+    if(redirectToProfile) {
+      return <Redirect 
+        to={`/user/${isAuthenticated().user._id}`}
+      />;
+    }
 
     return(
       <div className="container">
@@ -127,6 +147,15 @@ class EditPost extends Component {
         >
           {error}
         </div>
+        {
+          loading ? (
+            <div className="jumbotron text-center">
+              <h2>Loading...</h2>
+            </div>
+          ) : (
+            ""
+          )
+        }
       </div>
     );
   }

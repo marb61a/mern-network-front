@@ -95,25 +95,54 @@ class NewPost extends Component {
       <div className="form-group">
         <label className="text-muted">Post Photo</label>
         <input 
-        
+          onChange={this.handleChange("photo")}
+          type="file"
+          accept="image/*"
+          className="form-control"
         />
       </div>
       <div className="form-group">
         <label className="text-muted">Title</label>
         <input 
-        
+          onChange={this.handleChange("title")}
+          type="text"
+          className="form-control"
+          value={title}
         />
       </div>
       <div className="form-group">
         <label className="text-muted">Body</label>
         <input 
-        
+          onChange={this.handleChange("body")}
+          type="text"
+          className="form-control"
+          value={body}
         />
       </div>
+      <button
+        onClick={this.clickSubmit}
+        className="btn btn-raised btn-primary"
+      >
+        Create Post
+      </button>
     </form>
   );
 
   render(){
+    const {
+      title,
+      body,
+      photo,
+      user,
+      error,
+      loading,
+      redirectToProfile
+    } = this.state;
+
+    if (redirectToProfile) {
+      return <Redirect to={`/user/${user._id}`} />;
+    }
+
     return(
       <div className="container">
         <h2 className="mt-5 mb-5">Create a new post</h2>

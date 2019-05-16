@@ -47,7 +47,22 @@ class EditPost extends Component {
       error: ""
     });
 
+    const value = name === "photo" ? 
+      event.target.files[0] : 
+      event.target.value;
+
+    const fileSize = name === "photo" ? event.target.files[0].size : 0;
+    this.postData.set(name, value);
+    this.setState({ [name]: value, fileSize });
   };
+
+  clickSubmit = event => {
+    event.preventDefault();
+    this.setState({
+      loading: true
+    });
+    
+  }
 
   editPostForm = (title, body) => (
     <form>

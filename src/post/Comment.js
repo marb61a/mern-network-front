@@ -139,6 +139,15 @@ class Comment extends Component {
                         new Date(comment.created)
                           .toDateString()
                       }
+                      <span>
+                        {
+                          isAuthenticated().user &&
+                            isAuthenticated().user._id ===
+                              comment.postedBy._id && (
+                                
+                              )
+                        }
+                      </span>
                     </p>
                   </div>
                 </div>

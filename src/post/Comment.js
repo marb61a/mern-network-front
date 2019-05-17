@@ -79,6 +79,16 @@ class Comment extends Component {
       })
   };
 
+  deleteConfirmed = comment => {
+    let answer = window.confirm(
+      "Are you sure you want to delete your comment?"
+    );
+
+    if (answer) {
+        this.deleteComment(comment);
+    };
+  };
+
   render() {
     const { comments } = this.props;
     const { error } = this.state;
@@ -144,7 +154,18 @@ class Comment extends Component {
                           isAuthenticated().user &&
                             isAuthenticated().user._id ===
                               comment.postedBy._id && (
-                                
+                                <>
+                                  <span
+                                    onClick={() => {
+                                      this.deleteConfirmed(
+                                        comment
+                                      )
+                                    }}
+                                    className="text-danger float-right mr-1"
+                                  >
+                                    Remove
+                                  </span>
+                                </>
                               )
                         }
                       </span>

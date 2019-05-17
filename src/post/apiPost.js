@@ -69,6 +69,17 @@ export const update = (postId, token, post) => {
     .catch(err => console.log(err));
 };
 
+export const like = (userId, token, postId) => {
+  return fetch(``, {
+    method: 'PUT',
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    }
+  })
+};
+
 export const comment = (userId, token, postId, comment) => {
   return fetch(`${process.env.REACT_APP_API_URL}/post/comment`, {
     method: "PUT",

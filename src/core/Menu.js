@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
+import { signout, isAuthenticated } from "../auth";
+
 const isActive = (history, path) => {
   if(history.location.pathname === path) {
     return {color: "ff9900"};
@@ -97,9 +99,21 @@ const Menu = ({history}) => (
                 )}
                 className="nav-link"
               >
-              {`${isAuthenticated().user.name}'s profile`}
-            </Link>
-          </li>
+                {`${isAuthenticated().user.name}'s profile`}
+              </Link>
+            </li>
+            <li className="nav-item">
+              <span
+                className="nav-link"
+                style={
+                  (isActive(history, "/signup"),
+                  { cursor: "pointer", color: "#fff" })
+                }
+                onClick={() => signout(() => history.push("/"))}
+              >
+                Sign Out
+              </span>
+            </li>
           </>
         )
       }

@@ -108,7 +108,8 @@ export const socialLogin = user => {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    // credentials: "include", // works only in the same origin
+    // credentials: "include", 
+    // works only in the same origin
     body: JSON.stringify(user)
   })
     .then(response => {

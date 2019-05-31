@@ -132,6 +132,12 @@ class Comment extends Component {
                       className="float-left mr-2"
                       height="30px"
                       width="30px"
+                      onError={i =>
+                        (i.target.src = `${DefaultProfile}`)
+                      }
+                      src={`${
+                        process.env.REACT_APP_API_URL
+                      }/user/photo/${comment.postedBy._id}`}
                       alt={comment.postedBy.name}
                     />
                   </Link>

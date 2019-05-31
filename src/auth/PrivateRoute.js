@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
+
 import { isAuthenticated } from "./index";
 
 const PrivateRoute = ({component: Component, ...rest}) => (
+  // Props means components that are passed down to
+  // this private route component
   <Route 
     {...rest}
     render={props =>
